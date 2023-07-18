@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
     bool _isSkill;
     int _escapeRand;
     [SerializeField] Text _logText;
+    [SerializeField] Text _arrowText;
+    [SerializeField] Text _playerHpText;
+    [SerializeField] Text _playerSpText;
+    [SerializeField] Text _enemyHpText;
     [SerializeField] Transform _parent;
     [SerializeField] Slider _playerSpSlider;
     void Start()
@@ -51,9 +55,10 @@ public class GameManager : MonoBehaviour
                     Text tx2 = Instantiate(_logText);
                     tx2.transform.SetParent(_parent, false);
                     Debug.Log(_enemy.RandDamageEnemy);
-                    Destroy(tx, 2.0f);
-                    Destroy(tx1, 2.0f);
-                    Destroy(tx2, 2.0f);
+                    _enemyHpText.text = _enemy.HpSlider.value.ToString();
+                    //Destroy(tx, 2.0f);
+                    //Destroy(tx1, 2.0f);
+                    //Destroy(tx2, 2.0f);
                 }
                 else if (!_isSkill)
                 {
@@ -64,6 +69,7 @@ public class GameManager : MonoBehaviour
                     _logText.text = $"敵から{_enemy.RandDamageEnemy}のダメージを受けた!!\n";
                     Text tx3 = Instantiate(_logText);
                     tx3.transform.SetParent(_parent, false);
+                    _playerHpText.text = _player.HpSlider.value.ToString();
                     Debug.Log(_enemy.RandDamageEnemy);
                     Destroy(tx3, 2.0f);
                 }
@@ -82,6 +88,7 @@ public class GameManager : MonoBehaviour
             _logText.text = $"敵に{_player.RandDamagePlayer}のダメージを与えた!!\n";
             Text attackText = Instantiate(_logText);
             attackText.transform.SetParent(_parent, false);
+            _enemyHpText.text = _enemy.HpSlider.value.ToString();
             Destroy(attackText, 2.0f);
             Debug.Log(_player.RandDamagePlayer);
         }
@@ -92,6 +99,7 @@ public class GameManager : MonoBehaviour
         {
             _player.Sp -= 5;
             _playerSpSlider.value = _player.Sp;
+            _playerSpText.text = _playerSpSlider.value.ToString();
             _escapeRand = Random.Range(1, 10);
             if (_escapeRand <= 8)
             {
